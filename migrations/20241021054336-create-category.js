@@ -2,31 +2,35 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('tag', {
+    await queryInterface.createTable('category', {
       id: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
         allowNull: false,
         primaryKey: true,
-        autoIncrement: true,
+        defaultValue: Sequelize.literal('UUID()'),
       },
-      tag_name: {
+      category_name: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      createdAt: {
-        allowNull: false,
+      parent_id: {
+        type: Sequelize.UUID,
+        allowNull: true,
+      },
+      created_at: {
         type: Sequelize.DATE,
+        allowNull: false,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
       },
-      updatedAt: {
-        allowNull: false,
+      updated_at: {
         type: Sequelize.DATE,
+        allowNull: false,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'),
       },
     });
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('tag');
-  },
+    await queryInterface.dropTable('category');
+  }
 };

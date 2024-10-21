@@ -9,7 +9,7 @@
       "sourceType": "module"
     },
     "rules": {
-      "no-unused-vars": "warn" // Cảnh báo về biến không sử dụng
+      "no-unused-vars": "warn"
     }
   }
   

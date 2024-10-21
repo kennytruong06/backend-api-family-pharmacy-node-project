@@ -1,13 +1,9 @@
 const router = require('express').Router();
 const { Category, Product } = require('../../models');
 
-// The `/api/categories` endpoint
-
 router.get('/', async (req, res) => {
-  // find all categories
   try {
     const categoryData = await Category.findAll({
-      include: [{ model: Product }] // include its associated Products
     });
     res.status(200).json(categoryData);
   } catch (err) {
@@ -16,16 +12,13 @@ router.get('/', async (req, res) => {
 });
 
 router.get('/:id', async (req, res) => {
-  // find one category by its `id` value
   try {
     const categoryData = await Category.findByPk(req.params.id, {
-      include: [{ model: Product }] // include its associated Products
     });
     if (!categoryData) {
       res.status(400).json({
         message: 'No category found with that id!'
       });
-      return;
     } else {
       res.status(200).json(categoryData);
     }
@@ -36,35 +29,62 @@ router.get('/:id', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-  // create a new category
   try {
+    const existingCategory = await Category.findOne(
+        {
+            where: { category_name: req.body.category_name }
+          }
+        );
+
+    if (existingCategory) {
+      return res.status(400).json({ message: 'Category name already exists!' });
+    }
+
     const categoryData = await Category.create(req.body);
-    res.status(200).json(categoryData);
+    res.status(200).json({ message: 'Category created successfully!' });
   } catch (err) {
-    res.status(200).json(err);
+    res.status(500).json({ error: 'Failed to create category', details: err });
   }
 });
 
 router.put('/:id', async (req, res) => {
-  // update a category by its `id` value
   try {
-    const categoryData = await Category.update(req.body, {
-      where: {
-        id: req.params.id
+    const { category_name, parent_id } = req.body;
+
+    if (category_name) {
+      const existingCategory = await Category.findOne({
+        where: { category_name }
+      });
+
+      if (existingCategory) {
+        return res.status(400).json({ message: 'Category name already exists. Please choose another name.' });
       }
-    });
-    if (!categoryData) {
-      res.status(400).json({ message: 'No category found matching the id. Choose another id.' });
-      return
     }
-    res.status(200).json(categoryData)
+
+    let updateData = {};
+    if (category_name) updateData.category_name = category_name;
+    if (parent_id) updateData.parent_id = parent_id;
+
+    if (Object.keys(updateData).length === 0) {
+      return res.status(400).json({ message: 'No update data provided.' });
+    }
+
+    const categoryData = await Category.update(updateData, {
+      where: { id: req.params.id }
+    });
+
+    if (!categoryData[0]) {
+      return res.status(400).json({ message: 'No category found matching the id. Choose another id.' });
+    }
+
+    res.status(200).json({ message: 'Category updated successfully!' });
   } catch (err) {
-    res.status(500).json(err);
-  };
+    res.status(500).json({ error: 'Failed to update category', details: err });
+  }
 });
 
+
 router.delete('/:id',async (req, res) => {
-  // delete a category by its `id` value
   try{
     const categoryData = await Category.destroy({
       where: {
@@ -74,7 +94,6 @@ router.delete('/:id',async (req, res) => {
 
     if(!categoryData){
       res.status(400).json({ message: 'No category found matching the id. Choose another id' });
-      return;
     } else {
       res.status(200).json({ message: 'Category deleted!'});
     }
