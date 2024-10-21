@@ -16,6 +16,7 @@ function authJwt() {
             { url: /\/api\/products(.*)/, methods: ['GET', 'OPTIONS'] },
             { url: /\/api\/categories(.*)/, methods: ['GET', 'OPTIONS'] },
             { url: /\/api\/user\/([0-9a-fA-F-]{36})$/, methods: ['GET', 'OPTIONS', 'PUT'] },
+            { url: /\/api\/supplier(.*)/, methods: ['GET', 'OPTIONS'] },
             `${api}/user/login`,
             `${api}/user/register`,
             `${api}/user/verify-otp`,
