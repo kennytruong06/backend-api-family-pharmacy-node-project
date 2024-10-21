@@ -27,17 +27,17 @@ Product.init(
             allowNull: false,
             defaultValue: 0, // stock is set to 0 if not specified
             validate: {
-                isNumeric: true,
-            },
+                isNumeric: true
+            }
         },
         category_id: {
-            type: DataTypes.INTEGER, // Kiểu dữ liệu phải giống với khóa chính
+            type: DataTypes.INTEGER,
 
         }
     },
     {
         sequelize,
-        timestamps: false,
+        timestamps: true,
         freezeTableName: true,
         underscored: true,
         modelName: 'product',

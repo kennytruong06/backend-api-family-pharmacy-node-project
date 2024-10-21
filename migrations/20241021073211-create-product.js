@@ -6,8 +6,8 @@ module.exports = {
       id: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        primaryKey: true,
         autoIncrement: true,
+        primaryKey: true,
       },
       product_name: {
         type: Sequelize.STRING,
@@ -23,17 +23,18 @@ module.exports = {
         defaultValue: 0,
       },
       category_id: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
+        allowNull: true,
       },
-      createdAt: {
-        allowNull: false,
+      created_at: {
         type: Sequelize.DATE,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+        allowNull: false,
+        defaultValue: Sequelize.fn('NOW'),
       },
-      updatedAt: {
-        allowNull: false,
+      updated_at: {
         type: Sequelize.DATE,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'),
+        allowNull: false,
+        defaultValue: Sequelize.fn('NOW'),
       },
     });
   },
