@@ -1,11 +1,12 @@
 const seedCategories = require('./category-seeds');
 const seedProducts = require('./product-seeds');
-const seedUser = require('./user-seed');
+const seedUsers = require('./user-seeds');
+const seedSuppliers = require('./supplier-seeds');
 
 const sequelize = require('../config/connection');
 
 const seedAll = async () => {
-  await sequelize.sync({ force: true });
+  await sequelize.sync({ alter: true });
   console.log('\n----- DATABASE SYNCED -----\n');
 
   await seedCategories();
@@ -14,8 +15,11 @@ const seedAll = async () => {
   await seedProducts();
   console.log('\n----- PRODUCTS SEEDED -----\n');
 
-  await seedUser();
+  await seedUsers();
   console.log('\n----- USER SEEDED -----\n');
+
+  await seedSuppliers();
+  console.log('\n----- USER Supplier -----\n');
 
   process.exit(0);
 };
