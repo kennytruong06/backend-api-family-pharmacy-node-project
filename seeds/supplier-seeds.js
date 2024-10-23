@@ -1,4 +1,5 @@
 const { Supplier} = require('../models');
+
 const supplierData = [
   {
     id: '413e9b73-9f66-4fc4-a6f8-ba7dd090673b',

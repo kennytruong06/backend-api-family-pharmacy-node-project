@@ -1,39 +1,45 @@
 const { Model, DataTypes } = require('sequelize');
-const sequelize = require('../config/connection');
+const sequelize = require('../config/connection.js');
+const { v4: uuidv4 } = require('uuid');
 
 class Product extends Model {}
 
 Product.init(
     {
         id: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.UUID,
+            defaultValue: uuidv4,
             allowNull: false,
-            primaryKey: true,
-            autoIncrement: true,
+            primaryKey: true
         },
-        product_name: {
+        name: {
             type: DataTypes.STRING,
             allowNull: false,
         },
-        price: {
-            type: DataTypes.DECIMAL(10, 2), // 10 and 2 determine the precision and scale of the price
+        description: {
+            type: DataTypes.TEXT,
             allowNull: false,
-            validate: {
-                isDecimal: true, // ensure the value is a decimal
-            },
         },
-        stock: {
-            type: DataTypes.INTEGER,
+        price: {
+            type: DataTypes.DECIMAL(10, 2),
             allowNull: false,
-            defaultValue: 0, // stock is set to 0 if not specified
-            validate: {
-                isNumeric: true
-            }
         },
         category_id: {
+            type: DataTypes.UUID,
+            allowNull: false,
+        },
+        is_new : {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+        },
+        stock_quantity: {
             type: DataTypes.INTEGER,
-
-        }
+            allowNull: false,
+        },
+        supplier_id: {
+            type: DataTypes.UUID,
+            allowNull: false,
+        },
     },
     {
         sequelize,

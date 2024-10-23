@@ -2,39 +2,23 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('product', {
+    await queryInterface.createTable('image', {
       id: {
         type: Sequelize.UUID,
         allowNull: false,
         primaryKey: true,
         defaultValue: Sequelize.literal('UUID()'),
       },
-      name: {
+      product_id: {
+        type: Sequelize.UUID,
+        allowNull: false,
+      },
+      url: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      description: {
-        type: Sequelize.TEXT,
-        allowNull: false,
-      },
-      price: {
-        type: Sequelize.DECIMAL(10, 2),
-        allowNull: false,
-      },
-      category_id: {
-        type: Sequelize.UUID,
-        allowNull: false,
-      },
-      is_new : {
+      is_main: {
         type: Sequelize.BOOLEAN,
-        allowNull: false,
-      },
-      stock_quantity: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-      },
-      supplier_id: {
-        type: Sequelize.UUID,
         allowNull: false,
       },
       created_at: {
@@ -51,6 +35,6 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('product');
+    await queryInterface.dropTable('image');
   }
 };

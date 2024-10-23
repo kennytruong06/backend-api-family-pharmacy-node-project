@@ -18,9 +18,9 @@ function authJwt() {
             { url: /\/api\/users\/([0-9a-fA-F-]{36})$/, methods: ['GET', 'OPTIONS', 'PUT'] },
             { url: /\/api\/suppliers(.*)/, methods: ['GET', 'OPTIONS'] },
 
-            `${api}/user/login`,
-            `${api}/user/register`,
-            `${api}/user/verify-otp`,
+            `${api}/users/login`,
+            `${api}/users/register`,
+            `${api}/users/verify-otp`,
         ]
     });
 }

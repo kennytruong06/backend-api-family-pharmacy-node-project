@@ -117,7 +117,7 @@ const categoryData = [
         parent_id: 'd93893cd-3g7g-4907-b04d-3e5680dd4563',
     },
     {
-        id: 'd93893cd-bom6-4907-b04d-3e5680dd4563',
+        id: 'd93893cd-bom6-4907-b54d-3e5680dd4563',
         category_name: 'Nhiệt kế điện tử',
         parent_id: 'd93893cd-3g7g-4907-b04d-3e5680dd4563',
     },

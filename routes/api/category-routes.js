@@ -83,23 +83,23 @@ router.put('/:id', async (req, res) => {
   }
 });
 
-
-router.delete('/:id',async (req, res) => {
-  try{
-    const categoryData = await Category.destroy({
+router.delete('/:id', async (req, res) => {
+  try {
+    const productData = await Product.destroy({
       where: {
         id: req.params.id
       }
     });
 
-    if(!categoryData){
-      res.status(400).json({ message: 'No category found matching the id. Choose another id' });
+    if (!productData) {
+      return res.status(400).json({ message: 'No product found matching the id. Choose another id' });
     } else {
-      res.status(200).json({ message: 'Category deleted!'});
+      return res.status(200).json({ message: 'Product deleted!' });
     }
-  } catch(err) {
-    res.status(500).json(err);
+  } catch (err) {
+    return res.status(500).json({ error: 'An error occurred while trying to delete the product', details: err });
   }
 });
+
 
 module.exports = router;

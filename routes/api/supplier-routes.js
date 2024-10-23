@@ -46,7 +46,6 @@ router.post('/', async (req, res) => {
         const supplierData = await Supplier.create({ name, country });
         res.status(200).json({ message: 'Supplier created successfully!', data: supplierData });
     } catch (err) {
-        console.error(err);
         res.status(500).json({ error: 'Failed to create supplier', details: err });
     }
 });
